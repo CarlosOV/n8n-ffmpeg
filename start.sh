@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Verificar si ya existe el certificado
-if [ ! -f /etc/letsencrypt/live/n8n.painpointfinder.com/fullchain.pem ]; then
+if [ ! -f /etc/letsencrypt/live/n8n-test.nmviajes-it.com/fullchain.pem ]; then
     # Si no existe, obtener nuevo certificado
-    certbot --nginx -d n8n.painpointfinder.com --non-interactive --agree-tos --email carlosov@gmail.com
+    certbot --nginx -d n8n-test.nmviajes-it.com --non-interactive --agree-tos --email carlosov@gmail.com
 else
     # Si existe, asegurarse de que Nginx use la configuración SSL
     if [ ! -f /etc/nginx/conf.d/n8n-ssl.conf ]; then
@@ -11,10 +11,10 @@ else
         cat > /etc/nginx/conf.d/n8n-ssl.conf <<EOF
 server {
     listen 443 ssl;
-    server_name n8n.painpointfinder.com;
+    server_name n8n-test.nmviajes-it.com;
     
-    ssl_certificate /etc/letsencrypt/live/n8n.painpointfinder.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/n8n.painpointfinder.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/n8n-test.nmviajes-it.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/n8n-test.nmviajes-it.com/privkey.pem;
     
     location / {
         proxy_pass http://localhost:5678;
@@ -33,7 +33,7 @@ server {
 # Redirigir HTTP a HTTPS
 server {
     listen 80;
-    server_name n8n.painpointfinder.com;
+    server_name n8n-test.nmviajes-it.com;
     return 301 https://\$server_name\$request_uri;
 }
 EOF

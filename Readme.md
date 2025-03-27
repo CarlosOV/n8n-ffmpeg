@@ -47,3 +47,20 @@ docker run -d \
 
 ``` 
 docker run -d --name n8n -p 80:80 -p 443:443 -p 5678:5678 -v n8n_letsencrypt:/etc/letsencrypt -v n8n_certbot:/var/lib/certbot -v n8n_data:/home/node/.n8n carlosov/n8n-ffmpeg:0.0.5
+
+
+## N8n test command
+
+### Crear carpeta para el volume
+
+``` 
+mkdir -p ~/.n8n
+``` 
+
+### Crear archivo env
+Reemplázalo con tus propios valores
+
+``` 
+cp .env.example .env
+``` 
+
