@@ -2,9 +2,11 @@ version: '3.8'
 
 services:
   n8n:
-    image: carlosov/n8n-ffmpeg:0.0.6-n8n-test
+    image: carlosov/n8n-ffmpeg:0.0.6-1-n8n-test-puppeteer
     ports:
       - "5678:5678"
+      - "443:443"
+      - "80:80"
     env_file:
       - .env
     volumes:

@@ -2,13 +2,31 @@ FROM n8nio/n8n:latest
 
 USER root
 
-# Instalar dependencias
+# Instalar dependencias básicas + las necesarias para Puppeteer
 RUN apk update && apk add --no-cache \
     ffmpeg \
     nginx \
     certbot \
     certbot-nginx \
-    openssl
+    openssl \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    nodejs \
+    npm \
+    udev \
+    dumb-init \
+    bash
+
+# Establecer variables de entorno para Chromium (Puppeteer)
+ENV PUPPETEER_SKIP_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+# Instalar Puppeteer globalmente
+RUN npm install -g puppeteer
 
 # Crear directorios necesarios
 RUN mkdir -p /etc/nginx/conf.d \
