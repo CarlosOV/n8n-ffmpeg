@@ -2,7 +2,7 @@ FROM n8nio/n8n:latest
 
 USER root
 
-# Instalar dependencias básicas + las necesarias para Puppeteer
+# Instalar dependencias básicas + las necesarias para Puppeteer y Rubberband
 RUN apk update && apk add --no-cache \
     ffmpeg \
     nginx \
@@ -19,7 +19,9 @@ RUN apk update && apk add --no-cache \
     npm \
     udev \
     dumb-init \
-    bash
+    bash \
+    rubberband \
+    ladspa
 
 # Establecer variables de entorno para Chromium (Puppeteer)
 ENV PUPPETEER_SKIP_DOWNLOAD=true \
