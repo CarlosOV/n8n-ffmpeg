@@ -14,7 +14,7 @@ services:
       - "5432:5432"
 
   n8n:
-    image: carlosov/n8n-ffmpeg:0.0.7-n8n-2
+    image: carlosov/n8n-ffmpeg:0.0.8-n8n-2
     ports:
       - "5678:5678"
       - "443:443"
@@ -24,6 +24,20 @@ services:
     volumes:
       - ~/.n8n:/home/node
       - ~/letsencrypt:/etc/letsencrypt 
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: noco
+    ports:
+      - "8080:8080"
+    environment:
+      NC_DB: "pg://postgres:5432?u=n8n&p=n8npass&d=nocodb"
+      NC_AUTH_JWT_SECRET: "573c5a4b-95f1-483b-bb14-02bc73b5cea6"
+    volumes:
+      - ~/nocodb:/usr/app/data/
     depends_on:
       - postgres
     restart: unless-stopped
