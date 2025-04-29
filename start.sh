@@ -41,7 +41,7 @@ print_banner
 # Verificar si ya existe el certificado
 if [ ! -f /etc/letsencrypt/live/n8n-test.nmviajes-it.com/fullchain.pem ]; then
     # Si no existe, obtener nuevo certificado
-    certbot --nginx -d n8n-test.nmviajes-it.com --non-interactive --agree-tos --email carlosov@gmail.com
+    certbot --nginx -d n8n-test.nmviajes-it.com --non-interactive --agree-tos --email carlosovdev@gmail.com
 else
     # Si existe, asegurarse de que Nginx use la configuración SSL
     if [ ! -f /etc/nginx/conf.d/n8n-ssl.conf ]; then
@@ -54,6 +54,25 @@ server {
     ssl_certificate /etc/letsencrypt/live/n8n-test.nmviajes-it.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/n8n-test.nmviajes-it.com/privkey.pem;
     
+    # SSE para /mcp y /mcp-test
+    location ~ ^/(mcp|mcp-test) {
+        proxy_pass http://127.0.0.1:5678;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_http_version 1.1;
+        proxy_set_header Connection '';
+
+        # Evitar buffering para SSE
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 3600;
+        chunked_transfer_encoding off;
+    }
+
     location / {
         proxy_pass http://127.0.0.1:5678;
         proxy_set_header Host \$host;
