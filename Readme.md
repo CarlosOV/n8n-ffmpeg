@@ -64,3 +64,10 @@ Reemplázalo con tus propios valores
 cp .env.example .env
 ``` 
 
+
+
+### Certificado
+
+``` 
+certbot --nginx -d n8n-2.painpointfinder.com --non-interactive --agree-tos --email carlosovdev@gmail.com
+``` 

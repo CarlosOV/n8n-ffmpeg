@@ -49,6 +49,6 @@ COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Exponer puertos
-EXPOSE 80 443 5678
+EXPOSE 5678
 
 ENTRYPOINT ["/start.sh"]
