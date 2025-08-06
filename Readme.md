@@ -64,3 +64,7 @@ Reemplázalo con tus propios valores
 cp .env.example .env
 ``` 
 
+### Reset Chatwoot
+Permite la configuración desde cero
+
+docker compose run --rm rails bundle exec rails runner "Redis::Alfred.set(Redis::Alfred::CHATWOOT_INSTALLATION_ONBOARDING, true)"
